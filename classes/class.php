@@ -1,6 +1,6 @@
 <?php
-
-include("config.php");
+require_once(dirname(dirname(__FILE__))  . '/conf/config.php');
+//include("config.php");
 include('scraping.php');
 
 Class Main
@@ -29,7 +29,7 @@ Class Main
     $xml.= '&latitude='.$lat.'&longitude='.$lon.'&radius=3';
     //$xml.= '&area=hackney';
     $xml.= '&keyword=-shared';
-    $xml.= '&page_size=3';
+    $xml.= '&page_size=30';
     
     $obj = simplexml_load_file($xml);
 

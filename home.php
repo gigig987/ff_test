@@ -22,7 +22,7 @@
 
         <div id="contents"></div>
 
-        <?php include( "config.php"); $gmaps_key= Conf::GMAPS_API; ?>
+        <?php require_once(dirname(__FILE__)  . '/conf/config.php'); $gmaps_key= Conf::GMAPS_API; ?>
         <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $gmaps_key;?>&signed_in=true&libraries=drawing&callback=initMap" async defer></script>
 
     </body>

@@ -1,6 +1,5 @@
 <?php
-
-include("../class.php");
+require_once(dirname(dirname(__FILE__)) . '/classes/class.php');
 $Main = new Main;
 
 $list = ($Main->OneBedroomOnly(true));
