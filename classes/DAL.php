@@ -71,34 +71,44 @@ class DAL {
   return $results;      
 }
 
- private function insert($table,$cols,$values){
+ private function insert($table, $values){
  
   $this->dbconnect();
  
-  $sql = 'INSERT INTO'.$table.'(';
-  foreach ($cols as $col){
-  $sql .=  $col.',';
-  }
-  $sql .= ') VALUES (';
-  foreach ($values as $value){
-  $sql .=  $value.',';
-  }
-  $sql .= ')';
-  mysql_query($sql);
+  // retrieve the keys of the array (column titles)
+    $fields = array_keys($values);
+
+    // build the query
+    $sql = "INSERT INTO ".$table."
+    (`".implode('`,`', $fields)."`)
+    VALUES('".implode("','", $values)."')";
+
+    // run and return the query result resource
+    return mysql_query($sql);
  
 }
 
 ///////TO DO
 public function get_index_visits_by_id($id){
-    $sql = "SELECT ";
+    $sql = "SELECT `index` FROM visitsindex 
+WHERE date >= CURDATE()
+  AND date < CURDATE() + INTERVAL 1 DAY
+  AND id = ".$id."
+ORDER BY date ; ";
+
+
     return $this->select($sql);
   }
   
-public function insert_new_index_today($values){
+public function insert_new_index_today($id,$index){
     $table = "visitsindex";
-    $cols = array('id','date','index');
-    
-    $this->insert($table,$cols,$values);
+    $values = array(
+              'id' => $id,
+              'date' => date("Y-m-d H:i:s", time()),
+              'index' => $index
+              
+                    );
+    $this->insert($table,$values);
   }  
    
 }

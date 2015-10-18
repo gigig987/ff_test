@@ -1,7 +1,6 @@
 <?php
 require_once(dirname(dirname(__FILE__))  . '/conf/config.php');
-//include("config.php");
-include('scraping.php');
+
 
 Class Main
 {
