@@ -15,7 +15,7 @@ google.maps.event.addListener(map, "click", function (event) {
     console.log( latitude + ', ' + longitude );
 
     radius = new google.maps.Circle({map: map,
-        radius: 3 * 1609.344,
+        radius: 1 * 1609.344,
         center: event.latLng,
         fillColor: '#777',
         fillOpacity: 0.1,
@@ -65,8 +65,13 @@ function render(sites){
             var sites = markers[i];
              console.log(sites);
             var siteLatLng = new google.maps.LatLng(sites.latitude, sites.longitude);
-            var contents = '<div><h3>'+sites.address+'</h3>';
-                contents += '<p>index:<span class="index-number"><img src="./css/spin.gif" class="ajax-loading"/></span></p></div>';
+            
+            var contents = '<div><h3>'+sites.address+'</h3>'+
+                           '<a href="http://www.zoopla.co.uk/to-rent/details/'+sites.ID+'" target="_blank"><img src="'+sites.thumbnail_url+'" /> </a> '+
+                           '<span>commute: '+sites.commute+'</span>'+
+                           '<p>index: <span class="index-number"><img src="./css/spin.gif" class="ajax-loading"/></span></p>'+
+                           '</div>';
+                
             var marker = new google.maps.Marker({
                 position: siteLatLng,
                 map: map,

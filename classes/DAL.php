@@ -88,7 +88,6 @@ class DAL {
  
 }
 
-///////TO DO
 public function get_index_visits_by_id($id){
     $sql = "SELECT `index` FROM visitsindex 
 WHERE date >= CURDATE()
@@ -112,7 +111,7 @@ public function insert_new_index_today($id,$index){
   }  
    
 }
-////
+
 
    
 

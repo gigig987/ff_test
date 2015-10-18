@@ -18,13 +18,12 @@ if (isset($_POST["firstPublishedDate"]) && isset($_POST["ID"])) {
         foreach($storedindex as $a){
             echo $a->index;
         }
-        //echo $storedindex->index;
-       
+        
     } else {
         $value = $Scraping->scrapingZoopla($id, $date);
         
         $dal->insert_new_index_today($id, $value);
-        echo $value;
+        echo  $value;
     
     }
 }

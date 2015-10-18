@@ -20,15 +20,15 @@ Class Main
     $lat = $_GET['lat'];
     $lon = $_GET['lon'];
     $xml = 'http://api.zoopla.co.uk/api/v1/property_listings.xml?';
-
+    
     $xml.= 'listing_status=rent';
     $xml.= '&maximum_beds=1';
-    $xml.= '&maximum_price=250';
+    $xml.= '&maximum_price=280';
+    $xml.= '&order_by=age';
     $xml.= '&api_key='.$this->apikey;
-    $xml.= '&latitude='.$lat.'&longitude='.$lon.'&radius=3';
-    //$xml.= '&area=hackney';
+    $xml.= '&latitude='.$lat.'&longitude='.$lon.'&radius=1';
     $xml.= '&keyword=-shared';
-    $xml.= '&page_size=30';
+    $xml.= '&page_size=100';
     
     $obj = simplexml_load_file($xml);
 
@@ -75,10 +75,10 @@ Class Main
         $str="";
         
         $pattern1 =
-        "/\b([2-9]|(two|three|four|five|six|seven|eight|nine))\b\s\b(bedroom(?=s| |$)|room(?=s| |$)|double bedroom(?=s| |$))\b/"; //number of rooms
+        "/\b([2-9]|(two|three|four|five|six|seven|eight|nine))\b\s\b((bedroom?)(s\b|\b)|(room?)(s\b|\b)|(double bedroom?)(s\b|\b))\b/"; //number of rooms
         
         $pattern2 =
-        "/flatshare/"; //shared
+        "/(flatshare|(share?)(d\b|\b))/"; //shared
 
         foreach ($list as $single_flat){
             
@@ -97,7 +97,22 @@ Class Main
         return $matches;
     } //end OneBedroomOnly
     
-    
+    public function get_commute_time($list){
+        
+        if (isset($list->latitude)) {
+          $from = $list->latitude.','.$list->longitude;
+          }else
+          $from = $list->displayable_address;
+               $g_apikey = Conf::GMAPS_API;
+               $to = "W1U6JQ";
+               $base_url = 'https://maps.googleapis.com/maps/api/directions/xml?sensor=false';
+               $xml = simplexml_load_file("$base_url&origin=$from&destination=$to&mode=transit&key=$g_apikey");
+               $distance = (string)$xml->route->leg->distance->text;
+               $duration = (string)$xml->route->leg->duration->text;
+       
+            return $duration;
+        
+    }// end get_commute_time()
     
 }
 
