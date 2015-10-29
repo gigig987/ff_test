@@ -17,7 +17,7 @@ $list = ($Main->OneBedroomOnly(true));
                $first_published_date = (string) $a->first_published_date;
                $thumbnail_url = (string) $a->thumbnail_url;
                
-               $commute = (string) $Main->get_commute_time($a);
+               $commute = (string)$Main->get_commute_time($a);
              
                $single = array('ID' => $id,'latitude' => $lat,'longitude' => $long,'price' => $price, 'address' => $address,
                                'firstPublishedDate' =>  $first_published_date,
@@ -29,7 +29,7 @@ $list = ($Main->OneBedroomOnly(true));
                $i++;
               }
               
-           echo json_encode( $output);
+           echo json_encode( $output, JSON_HEX_QUOT | JSON_HEX_APOS);
           
 
 
